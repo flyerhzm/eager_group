@@ -1,5 +1,7 @@
 # EagerGroup
 
+[![Build Status](https://secure.travis-ci.org/xinminlabs/eager_group.png)](http://travis-ci.org/xinminlabs/eager_group)
+
 Fix n+1 aggregate sql functions for rails, like
 
     SELECT "posts".* FROM "posts";
