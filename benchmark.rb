@@ -1,3 +1,13 @@
+# Calculating -------------------------------------
+#   Without EagerGroup     2.000  i/100ms
+#      With EagerGroup    28.000  i/100ms
+# -------------------------------------------------
+#   Without EagerGroup     28.883  (± 6.9%) i/s -    144.000
+#      With EagerGroup    281.755  (± 5.0%) i/s -      1.428k
+#
+# Comparison:
+#      With EagerGroup:      281.8 i/s
+#   Without EagerGroup:       28.9 i/s - 9.76x slower
 $: << 'lib'
 require 'benchmark/ips'
 require 'active_record'
@@ -7,8 +17,8 @@ require 'eager_group'
 class Post < ActiveRecord::Base
   has_many :comments
 
+  define_eager_group :comments_average_rating, :comments, :average, :rating
   define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
-  define_eager_group :approved_comments_average_rating, :comments, :average, :rating
 end
 
 class Comment < ActiveRecord::Base
@@ -67,9 +77,9 @@ Benchmark.ips do |x|
   end
 
   x.report("With EagerGroup") do
-    Post.eager_group(:approved_comments_count, :approved_comments_average_rating).limit(20).each do |post|
+    Post.eager_group(:approved_comments_count, :comments_average_rating).limit(20).each do |post|
       post.approved_comments_count
-      post.approved_comments_average_rating
+      post.comments_average_rating
     end
   end
 
