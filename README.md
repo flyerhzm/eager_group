@@ -2,6 +2,8 @@
 
 [![Build Status](https://secure.travis-ci.org/xinminlabs/eager_group.png)](http://travis-ci.org/xinminlabs/eager_group)
 
+[More explaination on our blog](http://blog.xinminlabs.com/2015/06/29/eager_group/)
+
 Fix n+1 aggregate sql functions for rails, like
 
     SELECT "posts".* FROM "posts";
