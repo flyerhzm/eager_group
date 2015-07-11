@@ -16,4 +16,19 @@ ActiveRecord::Schema.define do
     t.integer :post_id
     t.timestamps null: false
   end
+
+  create_table :teachers, :force => true do |t|
+    t.string :name
+    t.timestamps null: false
+  end
+
+  create_table :students, :force => true do |t|
+    t.string :name
+    t.timestamps null: false
+  end
+
+  create_table :classrooms, :force => true do |t|
+    t.integer :teacher_id
+    t.integer :student_id
+  end
 end
