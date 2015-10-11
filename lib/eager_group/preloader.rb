@@ -18,8 +18,15 @@ module EagerGroup
           association_class = association_class.instance_exec(&definition.scope) if definition.scope
           if reflection.through_reflection
             foreign_key = "#{reflection.through_reflection.name}.#{reflection.through_reflection.foreign_key}"
+            as_where_condition = if reflection.through_reflection.options[:as]
+              # After Rails 4.0. STI use base_class as polymorphic type
+              ["#{reflection.through_reflection.options[:as]}_type = ?", @klass.base_class.name]
+            else
+              []
+            end
             aggregate_hash = association_class.joins(reflection.through_reflection.name)
                                               .where("#{foreign_key} IN (?)", record_ids)
+                                              .where(as_where_condition)
                                               .group("#{foreign_key}")
                                               .send(definition.aggregate_function, definition.column_name)
           else
