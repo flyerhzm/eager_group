@@ -30,6 +30,17 @@ RSpec.describe EagerGroup, type: :model do
         teachers = Teacher.all.eager_group(:students_count)
         expect(teachers[0].students_count).to eq 1
         expect(teachers[1].students_count).to eq 3
+        expect(teachers[2].students_count).to eq 0
+      end
+    end
+    
+    context "has_many :as, has_many :through" do
+      it "gets Student#posts_count" do
+        students = Student.all.eager_group(:posts_count)
+        
+        expect(students[0].posts_count).to eq 2
+        expect(students[1].posts_count).to eq 1
+        expect(students[2].posts_count).to eq 0
       end
     end
   end
