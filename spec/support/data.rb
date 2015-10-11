@@ -14,10 +14,10 @@ post1 = Post.create(title: "First post!")
 post2 = Post.create(title: "Second post!")
 post3 = Post.create(title: "Third post!")
 
-post1.comments.create(status: 'created', rating: 4, :author => student1)
-post1.comments.create(status: 'approved', rating: 5)
-post1.comments.create(status: 'deleted', rating: 0, :author => student2)
+post1.comments.create(status: 'created', rating: 4, author: student1)
+post1.comments.create(status: 'approved', rating: 5, author: student1)
+post1.comments.create(status: 'deleted', rating: 0, author: student2)
 
-post2.comments.create(status: 'approved', rating: 3, :author => student1)
+post2.comments.create(status: 'approved', rating: 3, author: student1)
 post2.comments.create(status: 'approved', rating: 5)
 
