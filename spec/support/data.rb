@@ -1,5 +1,6 @@
 post1 = Post.create(title: "First post!")
 post2 = Post.create(title: "Second post!")
+post3 = Post.create(title: "Third post!")
 
 post1.comments.create(status: 'created', rating: 4)
 post1.comments.create(status: 'approved', rating: 5)
