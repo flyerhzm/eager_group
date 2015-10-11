@@ -22,12 +22,10 @@ end
 class Student < ActiveRecord::Base
   has_many :classrooms
   has_many :teachers, through: :classrooms
-  
   has_many :comments, as: :author
   has_many :posts, through: :comments
   
-  define_eager_group :posts_count, :posts, :count, "distinct post_id"
-  
+  define_eager_group :posts_count, :posts, :count, "distinct post_id"  
 end
 
 class Classroom < ActiveRecord::Base

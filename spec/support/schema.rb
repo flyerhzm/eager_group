@@ -12,7 +12,6 @@ ActiveRecord::Schema.define do
   create_table :comments, :force => true do |t|
     t.string :body
     t.string :status
-    
     t.string :author_type
     t.integer :author_id
     t.integer :rating

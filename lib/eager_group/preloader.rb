@@ -16,7 +16,7 @@ module EagerGroup
           reflection = @klass.reflect_on_association(definition.association)
           association_class = reflection.class_name.constantize
           association_class = association_class.instance_exec(&definition.scope) if definition.scope
-          through_as_condition = lambda {|reflection|
+          polymophic_as_condition = lambda {|reflection|
             if reflection.type
               ["#{reflection.name}.#{reflection.type} = ?", @klass.base_class.name]
             else
@@ -28,12 +28,12 @@ module EagerGroup
             foreign_key = "#{reflection.through_reflection.name}.#{reflection.through_reflection.foreign_key}"
             aggregate_hash = association_class.joins(reflection.through_reflection.name)
                                               .where("#{foreign_key} IN (?)", record_ids)
-                                              .where(through_as_condition.call(reflection.through_reflection))
+                                              .where(polymophic_as_condition.call(reflection.through_reflection))
                                               .group("#{foreign_key}")
                                               .send(definition.aggregate_function, definition.column_name)
           else
             aggregate_hash = association_class.where(reflection.foreign_key => record_ids)
-                                              .where(through_as_condition.call(reflection))
+                                              .where(polymophic_as_condition.call(reflection))
                                               .group(reflection.foreign_key)
                                               .send(definition.aggregate_function, definition.column_name)
           end
@@ -44,6 +44,5 @@ module EagerGroup
         end
       end
     end
-    
   end
 end
