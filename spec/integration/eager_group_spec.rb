@@ -23,6 +23,13 @@ RSpec.describe EagerGroup, type: :model do
         expect(posts[1].comments_average_rating).to eq 4
         expect(posts[2].approved_comments_count).to eq 0
       end
+
+      it 'gets Post#comments_average_rating_by_author' do
+        students = Student.all
+        posts = Post.all.eager_group([:comments_average_rating_by_author, students[0], true])
+        expect(posts[0].comments_average_rating_by_author).to eq 4.5
+        expect(posts[1].comments_average_rating_by_author).to eq 3
+      end
     end
 
     context 'has_many :through' do
@@ -33,11 +40,11 @@ RSpec.describe EagerGroup, type: :model do
         expect(teachers[2].students_count).to eq 0
       end
     end
-    
+
     context "has_many :as, has_many :through" do
       it "gets Student#posts_count" do
         students = Student.all.eager_group(:posts_count)
-        
+
         expect(students[0].posts_count).to eq 2
         expect(students[1].posts_count).to eq 1
         expect(students[2].posts_count).to eq 0
