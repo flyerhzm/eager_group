@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.4.0 (05/18/2016)
+
+* Support scope arguments
+
 ## 0.3.0 (10/11/2015)
 
 * Support polymorphic association
