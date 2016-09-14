@@ -22,7 +22,25 @@ module EagerGroup
       self.send :attr_accessor, attr
       @eager_group_definations ||= {}
       @eager_group_definations[attr] = Definition.new association, aggregate_function, column_name, scope
+      
+      define_method attr, -> (*args) do
+        query_result_cache = instance_variable_get("@#{attr}")
+        if args.blank? && query_result_cache.present?
+          return query_result_cache
+        end
+        preload_eager_group(attr, *args)
+        instance_variable_get("@#{attr}")
+      end
+      
+      define_method "#{attr}=" do |val|
+        instance_variable_set("@#{attr}", val)
+      end
     end
+  end
+  
+  private
+  def preload_eager_group(*eager_group_value)
+    EagerGroup::Preloader.new(self.class, [self], [eager_group_value]).run
   end
 end
 
