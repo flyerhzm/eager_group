@@ -87,6 +87,14 @@ when querying
 EagerGroup will execute `GROUP BY` sqls for you then set the value of
 attributes.
 
+`define_eager_group` will define a method in model. 
+You can call the `definition_name` directly for convenience, 
+but it would not help you to fix n+1 aggregate sql issue.
+
+    post = Post.first
+    post.commets_average_rating
+    post.approved_comments_count
+
 ## Benchmark
 
 I wrote a benchmark script [here][1], it queries approved comments count
