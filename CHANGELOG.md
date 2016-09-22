@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.5.0 (09/22/2016)
+
+* Add magic method for one record
+
 ## 0.4.0 (05/18/2016)
 
 * Support scope arguments
@@ -14,4 +18,4 @@
 
 ## 0.1.0 (06/29/2015)
 
-* first release
+* First release
