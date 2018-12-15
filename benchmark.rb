@@ -64,7 +64,7 @@ post_ids = Post.all.pluck(:id)
 
 comments = []
 comments_size.times do |i|
-  comments << Comment.new(:body => "Comment #{i}", :post_id => post_ids[i%100], :status => ["approved", "deleted"][i%2], rating: i%5+1)
+  comments << Comment.new(:body => "Comment #{i}", :post_id => post_ids[i % 100], :status => ["approved", "deleted"][i % 2], rating: i % 5 + 1)
 end
 Comment.import comments
 

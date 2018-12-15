@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Fix n+1 aggregate sql functions for rails}
   spec.homepage      = "https://github.com/xinminlabs/eager_group"
 
-  spec.license     = 'MIT'
+  spec.license = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
