@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
 
   define_eager_group :comments_average_rating, :comments, :average, :rating
   define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
-  define_eager_group :comments_average_rating_by_author, :comments, :average, :rating, -> (author, ignore) {by_author(author, ignore)}
+  define_eager_group :comments_average_rating_by_author, :comments, :average, :rating, ->(author, ignore) { by_author(author, ignore) }
 end
 
 class Comment < ActiveRecord::Base
@@ -13,7 +13,7 @@ class Comment < ActiveRecord::Base
   belongs_to :author, polymorphic: true
 
   scope :approved, -> { where(status: 'approved') }
-  scope :by_author, -> (author, ignore) {where(author: author)}
+  scope :by_author, ->(author, ignore) { where(author: author) }
 end
 
 class Teacher < ActiveRecord::Base
