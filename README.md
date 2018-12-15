@@ -97,6 +97,10 @@ but it would not help you to fix n+1 aggregate sql issue.
     post.commets_average_rating
     post.approved_comments_count
 
+## Advanced
+
+   User.limit(10).includes(:posts).eager_group(posts: [:comments_average_rating, :approved_comments_count])
+
 ## Benchmark
 
 I wrote a benchmark script [here][1], it queries approved comments count

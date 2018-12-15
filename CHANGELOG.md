@@ -1,5 +1,7 @@
 # Next Release
 
+* Support hash as `eager_group` argument
+
 ## 0.5.0 (09/22/2016)
 
 * Add magic method for one record

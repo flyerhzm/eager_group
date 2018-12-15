@@ -10,9 +10,12 @@ student4 = Student.create name: 'Student 4'
 teacher1.students = [student1]
 teacher2.students = [student2, student3, student4]
 
-post1 = Post.create(title: "First post!")
-post2 = Post.create(title: "Second post!")
-post3 = Post.create(title: "Third post!")
+user1 = User.create(name: 'Alice')
+user2 = User.create(name: 'Bob')
+
+post1 = user1.posts.create(title: "First post!")
+post2 = user2.posts.create(title: "Second post!")
+post3 = user2.posts.create(title: "Third post!")
 
 post1.comments.create(status: 'created', rating: 4, author: student1)
 post1.comments.create(status: 'approved', rating: 5, author: student1)

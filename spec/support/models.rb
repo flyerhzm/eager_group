@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
+class User < ActiveRecord::Base
+  has_many :posts
+end
+
 class Post < ActiveRecord::Base
+  belongs_to :user
   has_many :comments
 
   define_eager_group :comments_average_rating, :comments, :average, :rating

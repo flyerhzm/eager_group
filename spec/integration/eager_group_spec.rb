@@ -32,6 +32,26 @@ RSpec.describe EagerGroup, type: :model do
         expect(posts[0].comments_average_rating_by_author).to eq 4.5
         expect(posts[1].comments_average_rating_by_author).to eq 3
       end
+
+      it 'gets Post#comments_average_rating from users' do
+        users = User.includes(:posts).eager_group(posts: :comments_average_rating)
+        expect(users[0].posts[0].comments_average_rating).to eq 3
+        expect(users[1].posts[0].comments_average_rating).to eq 4
+      end
+
+      it 'gets Post#comments_average_rating from users' do
+        users = User.includes(:posts).eager_group(posts: :comments_average_rating)
+        expect(users[0].posts[0].comments_average_rating).to eq 3
+        expect(users[1].posts[0].comments_average_rating).to eq 4
+      end
+
+      it 'gets Post#comments_average_rating and Post#comments_average_rating from users' do
+        users = User.includes(:posts).eager_group(posts: [:approved_comments_count, :comments_average_rating])
+        expect(users[0].posts[0].approved_comments_count).to eq 1
+        expect(users[0].posts[0].comments_average_rating).to eq 3
+        expect(users[1].posts[0].approved_comments_count).to eq 2
+        expect(users[1].posts[0].comments_average_rating).to eq 4
+      end
     end
 
     context 'has_many :through' do
