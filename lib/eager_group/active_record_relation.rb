@@ -26,6 +26,7 @@ class ActiveRecord::Relation
 
   def eager_group_values=(values)
     raise ImmutableRelation if @loaded
+
     @values[:eager_group] = values
   end
 end
