@@ -47,7 +47,7 @@ require 'active_record'
 ActiveRecord::Base.class_eval do
   include EagerGroup
   class << self
-    delegate :eager_group, :to => :all
+    delegate :eager_group, to: :all
   end
 end
 require 'active_record/with_eager_group'
