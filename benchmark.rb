@@ -30,7 +30,7 @@ class Comment < ActiveRecord::Base
 end
 
 # create database eager_group_benchmark;
-ActiveRecord::Base.establish_connection(:adapter => 'mysql2', :database => 'eager_group_benchmark', :server => '/tmp/mysql.socket', :username => 'root')
+ActiveRecord::Base.establish_connection(adapter: 'mysql2', database: 'eager_group_benchmark', server: '/tmp/mysql.socket', username: 'root')
 
 ActiveRecord::Base.connection.tables.each do |table|
   ActiveRecord::Base.connection.drop_table(table)
@@ -39,13 +39,13 @@ end
 ActiveRecord::Schema.define do
   self.verbose = false
 
-  create_table :posts, :force => true do |t|
+  create_table :posts, force: true do |t|
     t.string :title
     t.string :body
     t.timestamps null: false
   end
 
-  create_table :comments, :force => true do |t|
+  create_table :comments, force: true do |t|
     t.string :body
     t.string :status
     t.integer :rating
@@ -59,14 +59,14 @@ comments_size = 1000
 
 posts = []
 posts_size.times do |i|
-  posts << Post.new(:title => "Title #{i}", :body => "Body #{i}")
+  posts << Post.new(title: "Title #{i}", body: "Body #{i}")
 end
 Post.import posts
 post_ids = Post.all.pluck(:id)
 
 comments = []
 comments_size.times do |i|
-  comments << Comment.new(:body => "Comment #{i}", :post_id => post_ids[i % 100], :status => ["approved", "deleted"][i % 2], rating: i % 5 + 1)
+  comments << Comment.new(body: "Comment #{i}", post_id: post_ids[i % 100], status: ["approved", "deleted"][i % 2], rating: i % 5 + 1)
 end
 Comment.import comments
 
