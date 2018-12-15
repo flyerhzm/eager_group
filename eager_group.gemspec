@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Richard Huang"]
   spec.email         = ["flyerhzm@gmail.com"]
 
-  spec.summary       = %q{Fix n+1 aggregate sql functions}
-  spec.description   = %q{Fix n+1 aggregate sql functions for rails}
+  spec.summary       = 'Fix n+1 aggregate sql functions'
+  spec.description   = 'Fix n+1 aggregate sql functions for rails'
   spec.homepage      = "https://github.com/xinminlabs/eager_group"
 
   spec.license = 'MIT'
