@@ -30,7 +30,7 @@ or
     SELECT "posts".* FROM "posts";
     SELECT AVG("comments"."rating") AS average_comments_rating, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) GROUP BY post_id;
 
-It only supports Rails 4.x so far.
+It supports Rails 4.x and Rails 5.x
 
 ## Installation
 

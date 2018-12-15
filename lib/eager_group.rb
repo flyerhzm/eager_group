@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-require 'eager_group/version'
-require 'active_record'
-require 'eager_group/active_record_base'
-require 'eager_group/active_record_relation'
+require "eager_group/version"
 
 module EagerGroup
   autoload :Preloader, 'eager_group/preloader'
@@ -46,4 +43,12 @@ module EagerGroup
   end
 end
 
-ActiveRecord::Base.send :include, EagerGroup
+require 'active_record'
+ActiveRecord::Base.class_eval do
+  include EagerGroup
+  class << self
+    delegate :eager_group, :to => :all
+  end
+end
+require 'active_record/with_eager_group'
+ActiveRecord::Relation.send :prepend, ActiveRecord::WithEagerGroup
