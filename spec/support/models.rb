@@ -18,7 +18,7 @@ class Comment < ActiveRecord::Base
   belongs_to :author, polymorphic: true
 
   scope :approved, -> { where(status: 'approved') }
-  scope :by_author, ->(author, ignore) { where(author: author) }
+  scope :by_author, ->(author, _ignore) { where(author: author) }
 end
 
 class Teacher < ActiveRecord::Base
