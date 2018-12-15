@@ -4,9 +4,7 @@ module ActiveRecord
   module WithEagerGroup
     def exec_queries
       records = super
-      if eager_group_values.present?
-        EagerGroup::Preloader.new(klass, records, eager_group_values).run
-      end
+      EagerGroup::Preloader.new(klass, records, eager_group_values).run if eager_group_values.present?
       records
     end
 
