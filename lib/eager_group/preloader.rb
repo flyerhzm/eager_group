@@ -20,6 +20,7 @@ module EagerGroup
         end
         record_ids = @records.map { |record| record.send(primary_key) }
         next unless definition = @klass.eager_group_definitions[definition_key]
+
         reflection = @klass.reflect_on_association(definition.association)
         association_class = reflection.klass
         association_class = association_class.instance_exec(*arguments, &definition.scope) if definition.scope
