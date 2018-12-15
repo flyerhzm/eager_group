@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "eager_group/version"
+require 'eager_group/version'
 
 module EagerGroup
   autoload :Preloader, 'eager_group/preloader'
