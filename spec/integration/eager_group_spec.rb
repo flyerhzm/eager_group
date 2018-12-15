@@ -63,8 +63,8 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context "has_many :as, has_many :through" do
-      it "gets Student#posts_count" do
+    context 'has_many :as, has_many :through' do
+      it 'gets Student#posts_count' do
         students = Student.all.eager_group(:posts_count)
         expect(students[0].posts_count).to eq 2
         expect(students[1].posts_count).to eq 1
@@ -73,12 +73,12 @@ RSpec.describe EagerGroup, type: :model do
     end
   end
 
-  describe ".preload_eager_group" do
-    context "Cache query result" do
+  describe '.preload_eager_group' do
+    context 'Cache query result' do
       it 'eager_group result cached' do
         posts = Post.all.eager_group(:approved_comments_count)
         post = posts[0]
-        object_id1 = post.instance_variable_get("@approved_comments_count").object_id
+        object_id1 = post.instance_variable_get('@approved_comments_count').object_id
         object_id2 = post.approved_comments_count.object_id
         object_id3 = post.approved_comments_count.object_id
         expect(object_id1).to eq object_id2
@@ -89,7 +89,7 @@ RSpec.describe EagerGroup, type: :model do
         students = Student.all
         posts = Post.all.eager_group([:comments_average_rating_by_author, students[0], true])
         post = posts[0]
-        object_id1 = post.instance_variable_get("@comments_average_rating_by_author").object_id
+        object_id1 = post.instance_variable_get('@comments_average_rating_by_author').object_id
         object_id2 = post.comments_average_rating_by_author.object_id
         object_id3 = post.comments_average_rating_by_author.object_id
         expect(object_id1).to eq object_id2
@@ -151,8 +151,8 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context "has_many :as, has_many :through" do
-      it "gets Student#posts_count" do
+    context 'has_many :as, has_many :through' do
+      it 'gets Student#posts_count' do
         students = Student.all
         expect(students[0].posts_count).to eq 2
         expect(students[1].posts_count).to eq 1

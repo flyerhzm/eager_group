@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "eager_group/version"
+require 'eager_group/version'
 require 'active_record'
 require 'eager_group/active_record_base'
 require 'eager_group/active_record_relation'

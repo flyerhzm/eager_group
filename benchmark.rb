@@ -66,19 +66,19 @@ post_ids = Post.all.pluck(:id)
 
 comments = []
 comments_size.times do |i|
-  comments << Comment.new(body: "Comment #{i}", post_id: post_ids[i % 100], status: ["approved", "deleted"][i % 2], rating: i % 5 + 1)
+  comments << Comment.new(body: "Comment #{i}", post_id: post_ids[i % 100], status: ['approved', 'deleted'][i % 2], rating: i % 5 + 1)
 end
 Comment.import comments
 
 Benchmark.ips do |x|
-  x.report("Without EagerGroup") do
+  x.report('Without EagerGroup') do
     Post.limit(20).each do |post|
       post.comments.approved.count
       post.comments.approved.average('rating')
     end
   end
 
-  x.report("With EagerGroup") do
+  x.report('With EagerGroup') do
     Post.eager_group(:approved_comments_count, :comments_average_rating).limit(20).each do |post|
       post.approved_comments_count
       post.comments_average_rating
