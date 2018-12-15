@@ -30,6 +30,7 @@ module EagerGroup
         if args.blank? && query_result_cache.present?
           return query_result_cache
         end
+
         preload_eager_group(attr, *args)
         instance_variable_get("@#{attr}")
       end
@@ -41,6 +42,7 @@ module EagerGroup
   end
 
   private
+
   def preload_eager_group(*eager_group_value)
     EagerGroup::Preloader.new(self.class, [self], [eager_group_value]).run
   end
