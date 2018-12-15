@@ -18,7 +18,7 @@ module EagerGroup
           reflection = @klass.reflect_on_association(definition.association)
           association_class = reflection.klass
           association_class = association_class.instance_exec(*arguments, &definition.scope) if definition.scope
-          polymophic_as_condition = lambda {|reflection|
+          polymophic_as_condition = lambda { |reflection|
             if reflection.type
               ["#{reflection.name}.#{reflection.type} = ?", @klass.base_class.name]
             else
