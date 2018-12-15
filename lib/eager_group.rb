@@ -21,7 +21,7 @@ module EagerGroup
     #   define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
     # end
     def define_eager_group(attr, association, aggregate_function, column_name, scope = nil)
-      self.send :attr_accessor, attr
+      send :attr_accessor, attr
       @eager_group_definitions ||= {}
       @eager_group_definitions[attr] = Definition.new association, aggregate_function, column_name, scope
 
