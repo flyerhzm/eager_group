@@ -25,13 +25,13 @@ module EagerGroup
       @eager_group_definitions ||= {}
       @eager_group_definitions[attr] = Definition.new association, aggregate_function, column_name, scope
 
-      define_method attr, ->(*args) do
+      define_method attr, lambda { |*args|
         query_result_cache = instance_variable_get("@#{attr}")
         return query_result_cache if args.blank? && query_result_cache.present?
 
         preload_eager_group(attr, *args)
         instance_variable_get("@#{attr}")
-      end
+      }
 
       define_method "#{attr}=" do |val|
         instance_variable_set("@#{attr}", val)
