@@ -50,7 +50,7 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
   end
-  
+
   describe ".preload_eager_group" do
     context "Cache query result" do
       it 'eager_group result cached' do
@@ -62,7 +62,7 @@ RSpec.describe EagerGroup, type: :model do
         expect(object_id1).to eq object_id2
         expect(object_id1).to eq object_id3
       end
-      
+
       it 'eager_group result cached if arguments given' do
         students = Student.all
         posts = Post.all.eager_group([:comments_average_rating_by_author, students[0], true])
@@ -73,14 +73,14 @@ RSpec.describe EagerGroup, type: :model do
         expect(object_id1).to eq object_id2
         expect(object_id1).to eq object_id3
       end
-      
+
       it 'magic method result cached' do
         post = Post.first
         object_id1 = post.approved_comments_count.object_id
         object_id2 = post.approved_comments_count.object_id
         expect(object_id1).to eq object_id2
       end
-      
+
       it 'magic method not cache if arguments given' do
         students = Student.all
         posts = Post.all
@@ -89,7 +89,7 @@ RSpec.describe EagerGroup, type: :model do
         expect(object_id1).not_to eq object_id2
       end
     end
-    
+
     context 'has_many' do
       it 'gets Post#approved_comments_count' do
         posts = Post.all
