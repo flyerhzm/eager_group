@@ -25,7 +25,7 @@ module EagerGroup
       @eager_group_definations ||= {}
       @eager_group_definations[attr] = Definition.new association, aggregate_function, column_name, scope
 
-      define_method attr, -> (*args) do
+      define_method attr, ->(*args) do
         query_result_cache = instance_variable_get("@#{attr}")
         if args.blank? && query_result_cache.present?
           return query_result_cache
