@@ -1,6 +1,8 @@
 # EagerGroup
 
 [![Build Status](https://secure.travis-ci.org/xinminlabs/eager_group.png)](http://travis-ci.org/xinminlabs/eager_group)
+[![AwesomeCode Status for
+xinminlabs/eager_group](https://awesomecode.io/projects/e5386790-9420-4003-831a-c9a8c8a48108/status)](https://awesomecode.io/repos/xinminlabs/eager_group)
 
 [More explaination on our blog](http://blog.xinminlabs.com/2015/06/29/eager_group/)
 
@@ -87,8 +89,8 @@ when querying
 EagerGroup will execute `GROUP BY` sqls for you then set the value of
 attributes.
 
-`define_eager_group` will define a method in model. 
-You can call the `definition_name` directly for convenience, 
+`define_eager_group` will define a method in model.
+You can call the `definition_name` directly for convenience,
 but it would not help you to fix n+1 aggregate sql issue.
 
     post = Post.first
