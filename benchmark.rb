@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Calculating -------------------------------------
 #   Without EagerGroup     2.000  i/100ms
 #      With EagerGroup    28.000  i/100ms

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActiveRecord::Relation
   # Post.all.eager_group(:approved_comments_count, :comments_average_rating)
 

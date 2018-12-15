@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EagerGroup
   class Preloader
     def initialize(klass, records, eager_group_values)

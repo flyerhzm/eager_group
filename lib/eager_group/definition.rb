@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EagerGroup
   class Definition
     attr_reader :association, :aggregate_function, :column_name, :scope

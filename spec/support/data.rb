@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 teacher1 = Teacher.create name: 'Teacher 1'
 teacher2 = Teacher.create name: 'Teacher 2'
 teacher3 = Teacher.create name: "Teacher 3"
