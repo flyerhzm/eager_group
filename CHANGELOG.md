@@ -1,6 +1,9 @@
 # Next Release
 
+## 0.6.0 (12/15/2018)
+
 * Support hash as `eager_group` argument
+* Support rails 5.x
 
 ## 0.5.0 (09/22/2016)
 
