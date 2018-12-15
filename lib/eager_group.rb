@@ -27,9 +27,7 @@ module EagerGroup
 
       define_method attr, ->(*args) do
         query_result_cache = instance_variable_get("@#{attr}")
-        if args.blank? && query_result_cache.present?
-          return query_result_cache
-        end
+        return query_result_cache if args.blank? && query_result_cache.present?
 
         preload_eager_group(attr, *args)
         instance_variable_get("@#{attr}")

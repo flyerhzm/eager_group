@@ -5,9 +5,7 @@ class ActiveRecord::Relation
 
   def exec_queries_with_eager_group
     records = exec_queries_without_eager_group
-    if eager_group_values.present?
-      EagerGroup::Preloader.new(klass, records, eager_group_values).run
-    end
+    EagerGroup::Preloader.new(klass, records, eager_group_values).run if eager_group_values.present?
     records
   end
   alias_method_chain :exec_queries, :eager_group
