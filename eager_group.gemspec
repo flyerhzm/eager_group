@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Fix n+1 aggregate sql functions'
   spec.description   = 'Fix n+1 aggregate sql functions for rails'
-  spec.homepage      = 'https://github.com/xinminlabs/eager_group'
+  spec.homepage      = 'https://github.com/flyerhzm/eager_group'
 
   spec.license = 'MIT'
 

@@ -1,10 +1,10 @@
 # EagerGroup
 
-[![Build Status](https://secure.travis-ci.org/xinminlabs/eager_group.png)](http://travis-ci.org/xinminlabs/eager_group)
+[![Build Status](https://secure.travis-ci.org/flyerhzm/eager_group.png)](http://travis-ci.org/flyerhzm/eager_group)
 [![AwesomeCode Status for
-xinminlabs/eager_group](https://awesomecode.io/projects/e5386790-9420-4003-831a-c9a8c8a48108/status)](https://awesomecode.io/repos/xinminlabs/eager_group)
+flyerhzm/eager_group](https://awesomecode.io/projects/e5386790-9420-4003-831a-c9a8c8a48108/status)](https://awesomecode.io/repos/flyerhzm/eager_group)
 
-[More explaination on our blog](http://blog.xinminlabs.com/2015/06/29/eager_group/)
+[More explaination on our blog](http://blog.flyerhzm.com/2015/06/29/eager_group/)
 
 Fix n+1 aggregate sql functions for rails, like
 
@@ -109,6 +109,6 @@ times faster, WOW!
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/xinminlabs/eager_group.
+Bug reports and pull requests are welcome on GitHub at https://github.com/flyerhzm/eager_group.
 
-[1]:  https://github.com/xinminlabs/eager_group/blob/master/benchmark.rb
+[1]:  https://github.com/flyerhzm/eager_group/blob/master/benchmark.rb
