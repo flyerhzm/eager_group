@@ -99,7 +99,10 @@ but it would not help you to fix n+1 aggregate sql issue.
 
 ## Advanced
 
-   User.limit(10).includes(:posts).eager_group(posts: [:comments_average_rating, :approved_comments_count])
+```ruby
+User.limit(10).includes(:posts).eager_group(posts: [:comments_average_rating, :approved_comments_count])
+```
+
 
 ## Benchmark
 
