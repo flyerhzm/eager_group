@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.6.1 (03/05/2018)
+
+* Skip preload when association is empty
+
 ## 0.6.0 (12/15/2018)
 
 * Support hash as `eager_group` argument
