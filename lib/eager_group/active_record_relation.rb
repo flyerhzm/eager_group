@@ -8,6 +8,7 @@ class ActiveRecord::Relation
     EagerGroup::Preloader.new(klass, records, eager_group_values).run if eager_group_values.present?
     records
   end
+
   alias_method_chain :exec_queries, :eager_group
 
   def eager_group(*args)
