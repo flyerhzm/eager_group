@@ -52,6 +52,10 @@ RSpec.describe EagerGroup, type: :model do
         expect(users[1].posts[0].approved_comments_count).to eq 2
         expect(users[1].posts[0].comments_average_rating).to eq 4
       end
+
+      it 'does not raise error when association is empty' do
+        Teacher.includes(:homeworks).eager_group(homeworks: :students_count).to_a
+      end
     end
 
     context 'has_many :through' do

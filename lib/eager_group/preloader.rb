@@ -16,6 +16,7 @@ module EagerGroup
         if definition_key.is_a?(Hash)
           association_name, definition_key = *definition_key.first
           @records = @records.flat_map { |record| record.send(association_name) }
+          next if @records.empty?
           @klass = @records.first.class
         end
         record_ids = @records.map { |record| record.send(primary_key) }

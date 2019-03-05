@@ -41,4 +41,9 @@ ActiveRecord::Schema.define do
     t.integer :teacher_id
     t.integer :student_id
   end
+
+  create_table :homeworks, force: true do |t|
+    t.integer :teacher_id
+    t.integer :student_id
+  end
 end

@@ -24,6 +24,7 @@ end
 class Teacher < ActiveRecord::Base
   has_many :classrooms
   has_many :students, through: :classrooms
+  has_many :homeworks
 
   define_eager_group :students_count, :students, :count, :*
 end
@@ -33,6 +34,7 @@ class Student < ActiveRecord::Base
   has_many :teachers, through: :classrooms
   has_many :comments, as: :author
   has_many :posts, through: :comments
+  has_many :homeworks
 
   define_eager_group :posts_count, :posts, :count, 'distinct post_id'
 end
@@ -40,4 +42,11 @@ end
 class Classroom < ActiveRecord::Base
   belongs_to :teacher
   belongs_to :student
+end
+
+class Homework < ActiveRecord::Base
+  belongs_to :teacher
+  belongs_to :student
+
+  define_eager_group :students_count, :students, :count, '*'
 end
