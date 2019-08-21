@@ -14,6 +14,7 @@ module EagerGroup
     def aggregation_function
       return :maximum if @aggregate_function.to_sym == :last_object
       return :minimum if @aggregate_function.to_sym == :first_object
+
       @aggregate_function
     end
 
