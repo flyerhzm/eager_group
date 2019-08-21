@@ -88,8 +88,8 @@ result.
 * `association`, association name you want to aggregate.
 * `aggregate_function`, aggregate sql function, can be one of `average`,
 `count`, `maximum`, `minimum`, `sum`, I define 2 additional aggregate
-function `first_object` and `last_object` to fetch first and last object
-from associations.
+function `first_object` and `last_object` to eager load first and last
+association objects.
 * `column_name`, aggregate column name, it can be `:*` for `count`
 * `scope`, scope is optional, it's used to filter data for aggregation.
 
@@ -119,7 +119,7 @@ post.approved_comments_count
 
 ## Advanced
 
-eager_group through association
+`eager_group` through association
 
 ```ruby
 User.limit(10).includes(:posts).eager_group(posts: [:comments_average_rating, :approved_comments_count])
@@ -138,8 +138,8 @@ posts = Post.all.eager_group([:comments_average_rating_by_author, author, true])
 posts.each { |post| post.comments_average_rating_by_author }
 ```
 
-first_object and last_object aggregation to fetch first and last
-association object.
+`first_object` and `last_object` aggregation to eager load first and
+last association objects.
 
 ```ruby
 class Post < ActiveRecord::Base
