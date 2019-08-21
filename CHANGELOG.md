@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.7.0 (03/05/2018)
+
+* Add first_object and last_object aggregation
+
 ## 0.6.1 (03/05/2018)
 
 * Skip preload when association is empty
