@@ -33,16 +33,20 @@ module EagerGroup
                                             .where(foreign_key => record_ids)
                                             .where(polymophic_as_condition(reflection.through_reflection))
                                             .group(foreign_key)
-                                            .send(definition.aggregate_function, definition.column_name)
+                                            .send(definition.aggregation_function, definition.column_name)
         else
           aggregate_hash = association_class.where(reflection.foreign_key => record_ids)
                                             .where(polymophic_as_condition(reflection))
                                             .group(reflection.foreign_key)
-                                            .send(definition.aggregate_function, definition.column_name)
+                                            .send(definition.aggregation_function, definition.column_name)
+        end
+        if definition.need_load_object
+          aggregate_objects = association_class.find(aggregate_hash.values).each_with_object({}) { |o, h| h[o.id] = o }
+          aggregate_hash.keys.each { |key| aggregate_hash[key] = aggregate_objects[aggregate_hash[key]] }
         end
         @records.each do |record|
           id = record.send(primary_key)
-          record.send("#{definition_key}=", aggregate_hash[id] || 0)
+          record.send("#{definition_key}=", aggregate_hash[id] || definition.default_value)
         end
       end
     end

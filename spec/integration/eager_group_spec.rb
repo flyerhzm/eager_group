@@ -9,12 +9,14 @@ RSpec.describe EagerGroup, type: :model do
         posts = Post.all.eager_group(:approved_comments_count)
         expect(posts[0].approved_comments_count).to eq 1
         expect(posts[1].approved_comments_count).to eq 2
+        expect(posts[2].approved_comments_count).to eq 0
       end
 
       it 'gets Post#comments_average_rating' do
         posts = Post.all.eager_group(:comments_average_rating)
         expect(posts[0].comments_average_rating).to eq 3
         expect(posts[1].comments_average_rating).to eq 4
+        expect(posts[2].comments_average_rating).to eq 0
       end
 
       it 'gets both Post#approved_comments_count and Post#comments_average_rating' do
@@ -24,6 +26,7 @@ RSpec.describe EagerGroup, type: :model do
         expect(posts[1].approved_comments_count).to eq 2
         expect(posts[1].comments_average_rating).to eq 4
         expect(posts[2].approved_comments_count).to eq 0
+        expect(posts[2].comments_average_rating).to eq 0
       end
 
       it 'gets Post#comments_average_rating_by_author' do
@@ -43,6 +46,16 @@ RSpec.describe EagerGroup, type: :model do
         users = User.includes(:posts).eager_group(posts: :comments_average_rating)
         expect(users[0].posts[0].comments_average_rating).to eq 3
         expect(users[1].posts[0].comments_average_rating).to eq 4
+      end
+
+      it 'gets Post#first_comment and Post#last_comment' do
+        posts = Post.all.eager_group(:first_comment, :last_comment)
+        expect(posts[0].first_comment).to eq posts[0].comments.first
+        expect(posts[1].first_comment).to eq posts[1].comments.first
+        expect(posts[2].first_comment).to be_nil
+        expect(posts[0].last_comment).to eq posts[0].comments.last
+        expect(posts[1].last_comment).to eq posts[1].comments.last
+        expect(posts[2].last_comment).to be_nil
       end
 
       it 'gets Post#comments_average_rating and Post#comments_average_rating from users' do
