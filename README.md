@@ -8,27 +8,35 @@ flyerhzm/eager_group](https://awesomecode.io/projects/e5386790-9420-4003-831a-c9
 
 Fix n+1 aggregate sql functions for rails, like
 
-    SELECT "posts".* FROM "posts";
-    SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 1 AND "comments"."status" = 'approved'
-    SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 2 AND "comments"."status" = 'approved'
-    SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 3 AND "comments"."status" = 'approved'
+```
+SELECT "posts".* FROM "posts";
+SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 1 AND "comments"."status" = 'approved'
+SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 2 AND "comments"."status" = 'approved'
+SELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = 3 AND "comments"."status" = 'approved'
+```
 
 =>
 
-    SELECT "posts".* FROM "posts";
-    SELECT COUNT(*) AS count_all, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) AND "comments"."status" = 'approved' GROUP BY post_id;
+```
+SELECT "posts".* FROM "posts";
+SELECT COUNT(*) AS count_all, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) AND "comments"."status" = 'approved' GROUP BY post_id;
+```
 
 or
 
-    SELECT "posts".* FROM "posts";
-    SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 1;
-    SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 2;
-    SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 3;
+```
+SELECT "posts".* FROM "posts";
+SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 1;
+SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 2;
+SELECT AVG("comments"."rating") AS avg_id FROM "comments" WHERE "comments"."post_id" = 3;
+```
 
 =>
 
-    SELECT "posts".* FROM "posts";
-    SELECT AVG("comments"."rating") AS average_comments_rating, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) GROUP BY post_id;
+```
+SELECT "posts".* FROM "posts";
+SELECT AVG("comments"."rating") AS average_comments_rating, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) GROUP BY post_id;
+```
 
 It supports Rails 4.x, Rails 5.x and Rails 6.x
 
@@ -42,29 +50,35 @@ gem 'eager_group'
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install eager_group
+```
+$ gem install eager_group
+```
 
 ## Usage
 
 First you need to define what aggregate function you want to eager
 load.
 
-    class Post < ActiveRecord::Base
-      has_many :comments
+```ruby
+class Post < ActiveRecord::Base
+  has_many :comments
 
-      define_eager_group :comments_average_rating, :comments, :average, :rating
-      define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
-    end
+  define_eager_group :comments_average_rating, :comments, :average, :rating
+  define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
+end
 
-    class Comment < ActiveRecord::Base
-      belongs_to :post
+class Comment < ActiveRecord::Base
+  belongs_to :post
 
-      scope :approved, -> { where(status: 'approved') }
-    end
+  scope :approved, -> { where(status: 'approved') }
+end
+```
 
 The parameters for `define_eager_group` are as follows
 
@@ -73,18 +87,22 @@ method, it also generates a method with the same name to fetch the
 result.
 * `association`, association name you want to aggregate.
 * `aggregate_function`, aggregate sql function, can be one of `average`,
-`count`, `maximum`, `minimum`, `sum`.
+`count`, `maximum`, `minimum`, `sum`, I define 2 additional aggregate
+function `first_object` and `last_object` to fetch first and last object
+from associations.
 * `column_name`, aggregate column name, it can be `:*` for `count`
 * `scope`, scope is optional, it's used to filter data for aggregation.
 
 Then you can use `eager_group` to fix n+1 aggregate sql functions
 when querying
 
-    posts = Post.all.eager_group(:comments_average_rating, :approved_comments_count)
-    posts.each do |post|
-      post.comments_average_rating
-      post.approved_comments_count
-    end
+```ruby
+posts = Post.all.eager_group(:comments_average_rating, :approved_comments_count)
+posts.each do |post|
+  post.comments_average_rating
+  post.approved_comments_count
+end
+```
 
 EagerGroup will execute `GROUP BY` sqls for you then set the value of
 attributes.
@@ -93,14 +111,49 @@ attributes.
 You can call the `definition_name` directly for convenience,
 but it would not help you to fix n+1 aggregate sql issue.
 
-    post = Post.first
-    post.commets_average_rating
-    post.approved_comments_count
+```
+post = Post.first
+post.commets_average_rating
+post.approved_comments_count
+```
 
 ## Advanced
 
+eager_group through association
+
 ```ruby
 User.limit(10).includes(:posts).eager_group(posts: [:comments_average_rating, :approved_comments_count])
+```
+
+pass parameter to scope
+
+```ruby
+class Post < ActiveRecord::Base
+  has_many :comments
+
+  define_eager_group :comments_average_rating_by_author, :comments, :average, :rating, ->(author, ignore) { by_author(author, ignore) }
+end
+
+posts = Post.all.eager_group([:comments_average_rating_by_author, author, true])
+posts.each { |post| post.comments_average_rating_by_author }
+```
+
+first_object and last_object aggregation to fetch first and last
+association object.
+
+```ruby
+class Post < ActiveRecord::Base
+  has_many :comments
+
+  define_eager_group :first_comment, :comments, :first_object, :id
+  define_eager_group :last_comment, :comments, :last_object, :id
+end
+
+posts = Post.all.eager_group(:first_comment, :last_comment)
+posts.each do |post|
+  post.first_comment
+  post.last_comment
+end
 ```
 
 
