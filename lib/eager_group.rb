@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/module/attribute_accessors'
 require 'eager_group/version'
 
 module EagerGroup
@@ -11,7 +12,7 @@ module EagerGroup
   end
 
   module ClassMethods
-    attr_reader :eager_group_definitions
+    mattr_accessor :eager_group_definitions, default: {}
 
     # class Post
     #   define_eager_group :comments_avergage_rating, :comments, :average, :rating
@@ -19,8 +20,7 @@ module EagerGroup
     # end
     def define_eager_group(attr, association, aggregate_function, column_name, scope = nil)
       send :attr_accessor, attr
-      @eager_group_definitions ||= {}
-      @eager_group_definitions[attr] = Definition.new association, aggregate_function, column_name, scope
+      self.eager_group_definitions[attr] = Definition.new(association, aggregate_function, column_name, scope)
 
       define_method attr, lambda { |*args|
         query_result_cache = instance_variable_get("@#{attr}")
