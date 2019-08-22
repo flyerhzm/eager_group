@@ -1,8 +1,12 @@
 # Next Release
 
-## 0.7.0 (03/05/2018)
+## 0.7.1 (08/23/2019)
 
-* Add first_object and last_object aggregation
+* Set `eager_group_definitions` by `mattr_accessor`
+
+## 0.7.0 (08/22/2019)
+
+* Add `first_object` and `last_object` aggregation
 
 ## 0.6.1 (03/05/2018)
 
