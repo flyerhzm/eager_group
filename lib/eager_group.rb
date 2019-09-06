@@ -22,7 +22,7 @@ module EagerGroup
       attr, association, aggregate_function, column_name, scope = nil
     )
       send :attr_accessor, attr
-      self.eager_group_definitions[attr] =
+      eager_group_definitions[attr] =
         Definition.new(association, aggregate_function, column_name, scope)
 
       define_method attr,
