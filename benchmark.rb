@@ -20,11 +20,7 @@ class Post < ActiveRecord::Base
   has_many :comments
 
   define_eager_group :comments_average_rating, :comments, :average, :rating
-  define_eager_group :approved_comments_count,
-                     :comments,
-                     :count,
-                     :*,
-                     -> { approved }
+  define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
 end
 
 class Comment < ActiveRecord::Base
@@ -35,15 +31,10 @@ end
 
 # create database eager_group_benchmark;
 ActiveRecord::Base.establish_connection(
-  adapter: 'mysql2',
-  database: 'eager_group_benchmark',
-  server: '/tmp/mysql.socket',
-  username: 'root'
+  adapter: 'mysql2', database: 'eager_group_benchmark', server: '/tmp/mysql.socket', username: 'root'
 )
 
-ActiveRecord::Base.connection.tables.each do |table|
-  ActiveRecord::Base.connection.drop_table(table)
-end
+ActiveRecord::Base.connection.tables.each { |table| ActiveRecord::Base.connection.drop_table(table) }
 
 ActiveRecord::Schema.define do
   self.verbose = false
@@ -67,9 +58,7 @@ posts_size = 100
 comments_size = 1_000
 
 posts = []
-posts_size.times do |i|
-  posts << Post.new(title: "Title #{i}", body: "Body #{i}")
-end
+posts_size.times { |i| posts << Post.new(title: "Title #{i}", body: "Body #{i}") }
 Post.import posts
 post_ids = Post.all.pluck(:id)
 
@@ -77,10 +66,7 @@ comments = []
 comments_size.times do |i|
   comments <<
     Comment.new(
-      body: "Comment #{i}",
-      post_id: post_ids[i % 100],
-      status: %w[approved deleted][i % 2],
-      rating: i % 5 + 1
+      body: "Comment #{i}", post_id: post_ids[i % 100], status: %w[approved deleted][i % 2], rating: i % 5 + 1
     )
 end
 Comment.import comments
@@ -94,10 +80,7 @@ Benchmark.ips do |x|
   end
 
   x.report('With EagerGroup') do
-    Post.eager_group(:approved_comments_count, :comments_average_rating).limit(
-      20
-    )
-      .each do |post|
+    Post.eager_group(:approved_comments_count, :comments_average_rating).limit(20).each do |post|
       post.approved_comments_count
       post.comments_average_rating
     end
