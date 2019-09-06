@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+ActiveRecord::Base.establish_connection(
+  adapter: 'sqlite3', database: ':memory:'
+)
 
 ActiveRecord::Schema.define do
   self.verbose = false

@@ -23,7 +23,11 @@ module EagerGroup
     end
 
     def default_value
-      %i[first_object last_object].include?(@aggregate_function.to_sym) ? nil : 0
+      if %i[first_object last_object].include?(@aggregate_function.to_sym)
+        nil
+      else
+        0
+      end
     end
   end
 end

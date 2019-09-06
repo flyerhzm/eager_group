@@ -9,8 +9,16 @@ class Post < ActiveRecord::Base
   has_many :comments
 
   define_eager_group :comments_average_rating, :comments, :average, :rating
-  define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
-  define_eager_group :comments_average_rating_by_author, :comments, :average, :rating, ->(author, ignore) { by_author(author, ignore) }
+  define_eager_group :approved_comments_count,
+                     :comments,
+                     :count,
+                     :*,
+                     -> { approved }
+  define_eager_group :comments_average_rating_by_author,
+                     :comments,
+                     :average,
+                     :rating,
+                     ->(author, ignore) { by_author(author, ignore) }
   define_eager_group :first_comment, :comments, :first_object, :id
   define_eager_group :last_comment, :comments, :last_object, :id
 end

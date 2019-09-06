@@ -18,17 +18,23 @@ module EagerGroup
     #   define_eager_group :comments_avergage_rating, :comments, :average, :rating
     #   define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
     # end
-    def define_eager_group(attr, association, aggregate_function, column_name, scope = nil)
+    def define_eager_group(
+      attr, association, aggregate_function, column_name, scope = nil
+    )
       send :attr_accessor, attr
-      self.eager_group_definitions[attr] = Definition.new(association, aggregate_function, column_name, scope)
+      self.eager_group_definitions[attr] =
+        Definition.new(association, aggregate_function, column_name, scope)
 
-      define_method attr, lambda { |*args|
-        query_result_cache = instance_variable_get("@#{attr}")
-        return query_result_cache if args.blank? && query_result_cache.present?
+      define_method attr,
+                    lambda { |*args|
+                      query_result_cache = instance_variable_get("@#{attr}")
+                      if args.blank? && query_result_cache.present?
+                        return query_result_cache
+                      end
 
-        preload_eager_group(attr, *args)
-        instance_variable_get("@#{attr}")
-      }
+                      preload_eager_group(attr, *args)
+                      instance_variable_get("@#{attr}")
+                    }
 
       define_method "#{attr}=" do |val|
         instance_variable_set("@#{attr}", val)
