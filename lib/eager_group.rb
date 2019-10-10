@@ -52,4 +52,4 @@ ActiveRecord::Base.class_eval do
   end
 end
 require 'active_record/with_eager_group'
-ActiveRecord::Relation.send :prepend, ActiveRecord::WithEagerGroup
+ActiveRecord::Relation.prepend ActiveRecord::WithEagerGroup
