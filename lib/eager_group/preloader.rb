@@ -14,6 +14,7 @@ module EagerGroup
       @eager_group_values.each do |eager_group_value|
         definition_key, arguments =
           eager_group_value.is_a?(Array) ? [eager_group_value.shift, eager_group_value] : [eager_group_value, nil]
+
         if definition_key.is_a?(Hash)
           association_name, definition_key = *definition_key.first
           @records = @records.flat_map { |record| record.send(association_name) }
@@ -22,7 +23,9 @@ module EagerGroup
           @klass = @records.first.class
         end
         record_ids = @records.map { |record| record.send(primary_key) }
-        next unless definition = @klass.eager_group_definitions[definition_key]
+        unless definition = @klass.eager_group_definitions[definition_key]
+          next
+        end
 
         reflection = @klass.reflect_on_association(definition.association)
         association_class = reflection.klass
