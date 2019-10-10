@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.7.2 (10/10/2019)
+
+* Simplify `association_klass` for `first_object` and `last_object`
+
 ## 0.7.1 (08/23/2019)
 
 * Set `eager_group_definitions` by `mattr_accessor`
