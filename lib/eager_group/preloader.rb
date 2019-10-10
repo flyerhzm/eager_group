@@ -43,7 +43,7 @@ module EagerGroup
               .send(definition.aggregation_function, definition.column_name)
         end
         if definition.need_load_object
-          aggregate_objects = association_class.find(aggregate_hash.values).each_with_object({}) { |o, h| h[o.id] = o }
+          aggregate_objects = reflection.klass.find(aggregate_hash.values).each_with_object({}) { |o, h| h[o.id] = o }
           aggregate_hash.keys.each { |key| aggregate_hash[key] = aggregate_objects[aggregate_hash[key]] }
         end
         @records.each do |record|
