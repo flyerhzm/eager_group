@@ -71,7 +71,7 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context 'has_many :through' do
+    context 'has_and_belongs_to_many' do
       it 'gets Teacher#students_count' do
         teachers = Teacher.eager_group(:students_count)
         expect(teachers[0].students_count).to eq 1
@@ -80,7 +80,7 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context 'has_many :as, has_many :through' do
+    context 'has_many :through' do
       it 'gets Student#posts_count' do
         students = Student.eager_group(:posts_count)
         expect(students[0].posts_count).to eq 2
@@ -159,7 +159,7 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context 'has_many :through' do
+    context 'has_and_belongs_to_many' do
       it 'gets Teacher#students_count' do
         teachers = Teacher.all
         expect(teachers[0].students_count).to eq 1

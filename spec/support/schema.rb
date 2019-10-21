@@ -37,9 +37,9 @@ ActiveRecord::Schema.define do
     t.timestamps null: false
   end
 
-  create_table :classrooms, force: true do |t|
-    t.integer :teacher_id
+  create_table :students_teachers, force: true do |t|
     t.integer :student_id
+    t.integer :teacher_id
   end
 
   create_table :homeworks, force: true do |t|
