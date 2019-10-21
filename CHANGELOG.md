@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.8.0 (10/21/2019)
+
+* Support `has_and_belongs_to_many`
+
 ## 0.7.2 (10/10/2019)
 
 * Simplify `association_klass` for `first_object` and `last_object`
