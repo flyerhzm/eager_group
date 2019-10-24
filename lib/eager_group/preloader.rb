@@ -33,26 +33,18 @@ module EagerGroup
 
         if reflection.is_a?(ActiveRecord::Reflection::HasAndBelongsToManyReflection)
           foreign_key = "#{reflection.join_table}.#{reflection.foreign_key}"
-          aggregate_hash =
-            @klass.joins(reflection.name).where(foreign_key => record_ids).where(
-              polymophic_as_condition(reflection)
-            )
-              .group(foreign_key)
-              .send(definition.aggregation_function, definition.column_name)
+          aggregate_hash = @klass.joins(reflection.name)
         elsif reflection.through_reflection
           foreign_key = "#{reflection.through_reflection.name}.#{reflection.through_reflection.foreign_key}"
-          aggregate_hash =
-            association_class.joins(reflection.through_reflection.name).where(foreign_key => record_ids).where(
-              polymophic_as_condition(reflection.through_reflection)
-            )
-              .group(foreign_key)
-              .send(definition.aggregation_function, definition.column_name)
+          aggregate_hash = @klass.joins(reflection.name)
         else
-          aggregate_hash =
-            association_class.where(reflection.foreign_key => record_ids).where(polymophic_as_condition(reflection))
-              .group(reflection.foreign_key)
-              .send(definition.aggregation_function, definition.column_name)
+          foreign_key = reflection.foreign_key
+          aggregate_hash = association_class
         end
+        aggregate_hash = aggregate_hash.where(foreign_key => record_ids)
+                                       .where(polymophic_as_condition(reflection))
+                                       .group(foreign_key)
+                                       .send(definition.aggregation_function, definition.column_name)
         if definition.need_load_object
           aggregate_objects = reflection.klass.find(aggregate_hash.values).each_with_object({}) { |o, h| h[o.id] = o }
           aggregate_hash.keys.each { |key| aggregate_hash[key] = aggregate_objects[aggregate_hash[key]] }

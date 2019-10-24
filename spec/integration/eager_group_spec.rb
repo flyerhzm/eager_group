@@ -87,6 +87,12 @@ RSpec.describe EagerGroup, type: :model do
         expect(students[1].posts_count).to eq 1
         expect(students[2].posts_count).to eq 0
       end
+
+      it 'gets User#comments_count' do
+        users = User.eager_group(:comments_count)
+        expect(users[0].comments_count).to eq 3
+        expect(users[1].comments_count).to eq 2
+      end
     end
   end
 

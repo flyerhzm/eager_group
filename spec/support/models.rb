@@ -2,6 +2,9 @@
 
 class User < ActiveRecord::Base
   has_many :posts
+  has_many :comments, through: :posts
+
+  define_eager_group :comments_count, :comments, :count, :*
 end
 
 class Post < ActiveRecord::Base
