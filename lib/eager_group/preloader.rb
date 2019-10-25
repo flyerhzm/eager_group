@@ -31,16 +31,14 @@ module EagerGroup
         association_class = reflection.klass
         association_class = association_class.instance_exec(*arguments, &definition.scope) if definition.scope
 
-        if reflection.is_a?(ActiveRecord::Reflection::HasAndBelongsToManyReflection)
-          foreign_key = "#{reflection.join_table}.#{reflection.foreign_key}"
-          aggregate_hash = @klass.joins(reflection.name)
-        elsif reflection.through_reflection
-          foreign_key = "#{reflection.through_reflection.name}.#{reflection.through_reflection.foreign_key}"
-          aggregate_hash = @klass.joins(reflection.name)
-        else
-          foreign_key = reflection.foreign_key
-          aggregate_hash = association_class
-        end
+        foreign_key, aggregate_hash =
+          if reflection.is_a?(ActiveRecord::Reflection::HasAndBelongsToManyReflection)
+            ["#{reflection.join_table}.#{reflection.foreign_key}", @klass.joins(reflection.name)]
+          elsif reflection.through_reflection
+            ["#{reflection.through_reflection.name}.#{reflection.through_reflection.foreign_key}", @klass.joins(reflection.name)]
+          else
+            [reflection.foreign_key, association_class]
+          end
         aggregate_hash = aggregate_hash.where(foreign_key => record_ids)
                                        .where(polymophic_as_condition(reflection))
                                        .group(foreign_key)
