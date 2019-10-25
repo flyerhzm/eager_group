@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.8.1 (10/25/2019)
+
+* Fix for `has_many :through`
+
 ## 0.8.0 (10/21/2019)
 
 * Support `has_and_belongs_to_many`
