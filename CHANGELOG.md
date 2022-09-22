@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.8.2 (09/22/2022)
+
+* Add MIT-LICENSE
+
 ## 0.8.1 (10/25/2019)
 
 * Fix for `has_many :through`
