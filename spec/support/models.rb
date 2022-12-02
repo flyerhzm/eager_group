@@ -50,5 +50,10 @@ class Homework < ActiveRecord::Base
   belongs_to :teacher
   belongs_to :student
 
+  has_many :comments, through: :student
+
   define_eager_group :students_count, :students, :count, '*'
+  define_eager_group :student_comments_count, :comments, :count, '*'
 end
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)

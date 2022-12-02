@@ -23,3 +23,6 @@ post1.comments.create(status: 'deleted', rating: 0, author: student2)
 
 post2.comments.create(status: 'approved', rating: 3, author: student1)
 post2.comments.create(status: 'approved', rating: 5, author: teacher1)
+
+homework1 = Homework.create(student: student1, teacher: teacher1)
+homework1 = Homework.create(student: student2, teacher: teacher1)
