@@ -28,8 +28,5 @@ module ActiveRecord
 
       @values[:eager_group] = values
     end
-
-    private
-
   end
 end
