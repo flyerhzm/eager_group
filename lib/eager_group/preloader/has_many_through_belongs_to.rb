@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EagerGroup
   class Preloader
     class HasManyThroughBelongsTo < AggregationFinder
