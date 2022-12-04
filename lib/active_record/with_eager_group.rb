@@ -9,14 +9,13 @@ module ActiveRecord
     end
 
     def eager_group(*args)
-      raise ArgumentError, "The method .eager_group() must contain arguments." if args.blank?
-      args.compact_blank!
+      check_if_method_has_arguments!(__callee__, args)
 
       spawn.eager_group!(*args)
     end
 
     def eager_group!(*args)
-      self.eager_group_values += args
+      self.eager_group_values |= args
       self
     end
 

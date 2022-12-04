@@ -10,7 +10,8 @@ module EagerGroup
     def initialize(klass, records, eager_group_values)
       @klass = klass
       @records = Array.wrap(records).compact.uniq
-      @eager_group_values = eager_group_values
+      eager_group_definitions = @klass.eager_group_definitions
+      @eager_group_values = eager_group_values.all? { |value| eager_group_definitions.key?(value) } ? eager_group_values : [eager_group_values]
     end
 
     # Preload aggregate functions
