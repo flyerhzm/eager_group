@@ -1,12 +1,13 @@
 # frozen_string_literal: true
-require 'eager_group/preloader/aggregation_finder'
-require 'eager_group/preloader/has_many'
-require 'eager_group/preloader/has_many_through_belongs_to'
-require 'eager_group/preloader/has_many_through_many'
-require 'eager_group/preloader/many_to_many'
 
 module EagerGroup
   class Preloader
+    autoload :AggregationFinder, 'eager_group/preloader/aggregation_finder'
+    autoload :HasMany, 'eager_group/preloader/has_many'
+    autoload :HasManyThroughBelongsTo, 'eager_group/preloader/has_many_through_belongs_to'
+    autoload :HasManyThroughMany, 'eager_group/preloader/has_many_through_many'
+    autoload :ManyToMany, 'eager_group/preloader/many_to_many'
+
     def initialize(klass, records, eager_group_values)
       @klass = klass
       @records = Array.wrap(records).compact.uniq
