@@ -9,7 +9,9 @@ module ActiveRecord
     end
 
     def eager_group(*args)
-      check_if_method_has_arguments!('eager_group', args)
+      raise ArgumentError, "The method .eager_group() must contain arguments." if args.blank?
+      args.compact_blank!
+
       spawn.eager_group!(*args)
     end
 
@@ -27,5 +29,8 @@ module ActiveRecord
 
       @values[:eager_group] = values
     end
+
+    private
+
   end
 end

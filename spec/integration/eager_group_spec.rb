@@ -60,6 +60,7 @@ RSpec.describe EagerGroup, type: :model do
 
       it 'gets Post#comments_average_rating and Post#comments_average_rating from users' do
         users = User.includes(:posts).eager_group(posts: %i[approved_comments_count comments_average_rating])
+
         expect(users[0].posts[0].approved_comments_count).to eq 1
         expect(users[0].posts[0].comments_average_rating).to eq 3
         expect(users[1].posts[0].approved_comments_count).to eq 2
@@ -80,7 +81,7 @@ RSpec.describe EagerGroup, type: :model do
       end
     end
 
-    context 'has_many :through' do
+    context 'has_many :through many' do
       it 'gets Student#posts_count' do
         students = Student.eager_group(:posts_count)
         expect(students[0].posts_count).to eq 2
@@ -92,6 +93,14 @@ RSpec.describe EagerGroup, type: :model do
         users = User.eager_group(:comments_count)
         expect(users[0].comments_count).to eq 3
         expect(users[1].comments_count).to eq 2
+      end
+    end
+
+    context 'has_many :through belongs to' do
+      it 'gets Homework#student_comments_count' do
+        homeworks = Homework.eager_group(:student_comments_count)
+        expect(homeworks[0].student_comments_count).to eq(3)
+        expect(homeworks[1].student_comments_count).to eq(1)
       end
     end
   end
@@ -181,6 +190,7 @@ RSpec.describe EagerGroup, type: :model do
         expect(students[1].posts_count).to eq 1
         expect(students[2].posts_count).to eq 0
       end
+
     end
   end
 end
