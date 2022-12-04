@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.9.0 (12/04/2022)
+
+* Support `has_many`  through `belongs_to`
+
 ## 0.8.2 (09/22/2022)
 
 * Add MIT-LICENSE
