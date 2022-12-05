@@ -9,8 +9,7 @@ module ActiveRecord
     end
 
     def eager_group(*args)
-      raise ArgumentError, "The method .eager_group() must contain arguments." if args.blank?
-      args.compact_blank!
+      check_argument_not_blank!(args)
 
       spawn.eager_group!(*args)
     end
@@ -28,6 +27,13 @@ module ActiveRecord
       raise ImmutableRelation if @loaded
 
       @values[:eager_group] = values
+    end
+
+    private
+
+    def check_argument_not_blank!(args)
+      raise ArgumentError, "The method .eager_group() must contain arguments." if args.blank?
+      args.compact_blank!
     end
   end
 end
