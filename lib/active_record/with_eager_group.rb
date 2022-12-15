@@ -9,6 +9,9 @@ module ActiveRecord
     end
 
     def eager_group(*args)
+      # we does not use the `check_if_method_has_arguments!` here because it would flatten all the arguments,
+      # which would cause `[:eager_group_definition, scope_arg1, scope_arg2]` not able to preload together with other `eager_group_definitions`.
+      # e.g. `Post.eager_group(:approved_comments_count, [:comments_average_rating_by_author, students[0], true])`
       check_argument_not_blank!(args)
 
       spawn.eager_group!(*args)
