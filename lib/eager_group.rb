@@ -40,7 +40,7 @@ module EagerGroup
   private
 
   def preload_eager_group(*eager_group_value)
-    EagerGroup::Preloader.new(self.class, [self], eager_group_value).run
+    EagerGroup::Preloader.new(self.class, [self], [eager_group_value]).run
   end
 end
 

@@ -25,6 +25,10 @@ module EagerGroup
         @klass.primary_key
       end
 
+      def aggregate_hash
+        raise NotImplementedError, 'Method "aggregate_hash" must be implemented in subclass'
+      end
+
       private
 
       def polymophic_as_condition

@@ -36,6 +36,18 @@ RSpec.describe EagerGroup, type: :model do
         expect(posts[1].comments_average_rating_by_author).to eq 3
       end
 
+      it 'eager_group multiple different type of aggregate definitions' do
+        students = Student.all
+        posts = Post.eager_group(:approved_comments_count, [:comments_average_rating_by_author, students[0], true])
+        #comments_average_rating_by_author
+        expect(posts[0].comments_average_rating_by_author).to eq 4.5
+        expect(posts[1].comments_average_rating_by_author).to eq 3
+        # approved_comments_count
+        expect(posts[0].approved_comments_count).to eq 1
+        expect(posts[1].approved_comments_count).to eq 2
+        expect(posts[2].approved_comments_count).to eq 0
+      end
+
       it 'gets Post#comments_average_rating from users' do
         users = User.includes(:posts).eager_group(posts: :comments_average_rating)
         expect(users[0].posts[0].comments_average_rating).to eq 3
