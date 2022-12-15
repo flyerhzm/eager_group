@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.9.1 (12/15/2022)
+
+* Fix eager group fetch multi definitions
+
 ## 0.9.0 (12/04/2022)
 
 * Support `has_many`  through `belongs_to`
