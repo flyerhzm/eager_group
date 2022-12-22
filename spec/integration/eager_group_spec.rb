@@ -146,7 +146,7 @@ RSpec.describe EagerGroup, type: :model do
           expect{ User.includes(:posts).eager_group(posts: %i[unknown_eager_group_definition]) }.to raise_error(ArgumentError)
         end
 
-        it "should get exception when parent call subclass eager_group_definition" do
+        it "should raise ArgumentError when parent class call a non-exist definition" do
           expect { Vehicle.eager_group(:credited_passengers_count) }.to raise_error(ArgumentError)
         end
       end
