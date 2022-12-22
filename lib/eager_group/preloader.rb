@@ -22,10 +22,13 @@ module EagerGroup
 
         if definition_key.is_a?(Hash)
           association_name, definition_key = *definition_key.first
+          next if @records.empty?
+          @klass = @records.first.class.reflect_on_association(association_name).klass
+
           @records = @records.flat_map { |record| record.send(association_name) }
           next if @records.empty?
 
-          @klass = @records.first.class
+
           self.class.new(@klass, @records, Array.wrap(definition_key)).run
         end
 

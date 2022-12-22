@@ -26,3 +26,16 @@ post2.comments.create(status: 'approved', rating: 5, author: teacher1)
 
 homework1 = Homework.create(student: student1, teacher: teacher1)
 homework1 = Homework.create(student: student2, teacher: teacher1)
+
+bus = SchoolBus.create(name: 'elementary bus')
+sedan = Sedan.create(name: 'honda accord')
+
+bus.passengers.create(name: 'Ruby', age: 7)
+bus.passengers.create(name: 'Mike', age: 8)
+bus.passengers.create(name: 'Zach', age: 9)
+bus.passengers.create(name: 'Jacky', age: 10)
+
+sedan.passengers.create(name: 'Ruby', age: 7)
+sedan.passengers.create(name: 'Mike', age: 8)
+sedan.passengers.create(name: 'Zach', age: 9)
+sedan.passengers.create(name: 'Jacky', age: 10)

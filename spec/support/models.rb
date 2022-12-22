@@ -56,4 +56,26 @@ class Homework < ActiveRecord::Base
   define_eager_group :student_comments_count, :comments, :count, '*'
 end
 
+class Vehicle < ActiveRecord::Base
+  has_many :passengers
+  has_many :users, through: :passengers
+
+  define_eager_group :passengers_count, :passengers, :count, '*'
+end
+
+class SchoolBus < Vehicle
+  define_eager_group :credited_passengers_count, :passengers, :count, '*', -> { where('age < 10') }
+  define_eager_group :young_passengers_count, :passengers, :count, '*', -> { where('age < 8') }
+end
+
+class Sedan < Vehicle
+  define_eager_group :credited_passengers_count, :passengers, :count, '*', -> { where('age < 8') }
+
+end
+
+class Passenger < ActiveRecord::Base
+  belongs_to :vehicle
+
+end
+
 ActiveRecord::Base.logger = Logger.new(STDOUT)

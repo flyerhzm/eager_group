@@ -18,7 +18,7 @@ module EagerGroup
       end
 
       def record_ids
-        @record_ids ||= @records.map { |record| record.send(group_by_key) }
+        @record_ids ||= @records.map { |record| record.send(group_by_key) }.uniq
       end
 
       def group_by_key

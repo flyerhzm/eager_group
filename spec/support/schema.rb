@@ -46,4 +46,18 @@ ActiveRecord::Schema.define do
     t.integer :teacher_id
     t.integer :student_id
   end
+
+  create_table :vehicles, force: true do |t|
+    t.string :type
+    t.string :name
+    t.timestamps null: false
+  end
+
+  create_table :passengers, force: true do |t|
+    t.integer :vehicle_id
+    t.string :name
+    t.integer :age
+
+    t.timestamps null: false
+  end
 end
