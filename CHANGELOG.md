@@ -1,5 +1,9 @@
 # Next Release
 
+## 0.10.0 (12/28/2022)
+
+* Add STI support, use `class_attribute` to prevent subclasses affect each other
+
 ## 0.9.1 (12/15/2022)
 
 * Fix eager group fetch multi definitions
