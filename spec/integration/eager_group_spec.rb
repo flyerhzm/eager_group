@@ -115,6 +115,42 @@ RSpec.describe EagerGroup, type: :model do
         expect(homeworks[1].student_comments_count).to eq(1)
       end
     end
+
+    context 'support STI' do
+      it 'gets SchoolBus#credited_passengers_count' do
+        buses = SchoolBus.eager_group(:credited_passengers_count, :passengers_count)
+        expect(buses[0].credited_passengers_count).to eq(3)
+        expect(buses[0].passengers_count).to eq(4)
+      end
+
+      it 'gets Sedan#credited_passengers_count' do
+        sedans = Sedan.eager_group(:credited_passengers_count, :passengers_count)
+        expect(sedans[0].credited_passengers_count).to eq(1)
+        expect(sedans[0].passengers_count).to eq(4)
+      end
+
+      it 'gets Vehicle#passengers_count' do
+        vehicles = Vehicle.eager_group(:passengers_count)
+        expect(vehicles[0].passengers_count).to eq(4)
+        expect(vehicles[1].passengers_count).to eq(4)
+      end
+    end
+
+    context 'check arguments' do
+      context 'definition not exists' do
+        it 'should raise ArgumentError' do
+          expect{ Sedan.eager_group(:young_passengers_count) }.to raise_error(ArgumentError)
+        end
+
+        it 'should raise ArgumentError from association' do
+          expect{ User.includes(:posts).eager_group(posts: %i[unknown_eager_group_definition]) }.to raise_error(ArgumentError)
+        end
+
+        it "should raise ArgumentError when parent class call a non-exist definition" do
+          expect { Vehicle.eager_group(:credited_passengers_count) }.to raise_error(ArgumentError)
+        end
+      end
+    end
   end
 
   describe '.preload_eager_group' do
