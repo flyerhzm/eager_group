@@ -70,7 +70,7 @@ class Post < ActiveRecord::Base
   has_many :comments
 
   define_eager_group :comments_average_rating, :comments, :average, :rating
-  define_eager_group :approved_comments_count, :comments, :count, :*, -> { approved }
+  define_eager_group :approved_comments_count, :comments, :count, :all, -> { approved }
 end
 
 class Comment < ActiveRecord::Base
@@ -90,7 +90,8 @@ result.
 `count`, `maximum`, `minimum`, `sum`, I define 2 additional aggregate
 function `first_object` and `last_object` to eager load first and last
 association objects.
-* `column_name`, aggregate column name, it can be `:*` for `count`
+* `column_name`, aggregate column name, it can be `:all` (from rails 8) or
+`:*` for `count`.
 * `scope`, scope is optional, it's used to filter data for aggregation.
 
 Then you can use `eager_group` to fix n+1 aggregate sql functions
