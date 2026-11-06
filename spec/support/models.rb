@@ -78,4 +78,9 @@ class Passenger < ActiveRecord::Base
 
 end
 
+class Tag < ActiveRecord::Base
+  has_many :children, class_name: 'Tag', foreign_key: :parent_name, primary_key: :name
+  define_eager_group :children_count, :children, :count, :*
+end
+
 ActiveRecord::Base.logger = Logger.new(STDOUT)

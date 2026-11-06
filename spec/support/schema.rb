@@ -60,4 +60,9 @@ ActiveRecord::Schema.define do
 
     t.timestamps null: false
   end
+
+  create_table :tags, force: true do |t|
+    t.string :name, null: false
+    t.string :parent_name
+  end
 end
