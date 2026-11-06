@@ -1,5 +1,7 @@
 # Next Release
 
+## 0.11.0 (11/06/2026)
+
 * Drop Ruby 3.1 and Rails 4.x, 5.x, 6.x support
 * Support Ruby 3.2, 3.3, 3.4, 4.0 and Rails 7.x, 8.x
 * Replace Travis CI with GitHub Actions
