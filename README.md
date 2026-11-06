@@ -1,6 +1,6 @@
 # EagerGroup
 
-[![Build Status](https://secure.travis-ci.org/flyerhzm/eager_group.png)](http://travis-ci.org/flyerhzm/eager_group)
+[![CI](https://github.com/flyerhzm/eager_group/actions/workflows/main.yml/badge.svg)](https://github.com/flyerhzm/eager_group/actions/workflows/main.yml)
 [![AwesomeCode Status for
 flyerhzm/eager_group](https://awesomecode.io/projects/e5386790-9420-4003-831a-c9a8c8a48108/status)](https://awesomecode.io/repos/flyerhzm/eager_group)
 
@@ -38,7 +38,7 @@ SELECT "posts".* FROM "posts";
 SELECT AVG("comments"."rating") AS average_comments_rating, post_id AS post_id FROM "comments" WHERE "comments"."post_id" IN (1, 2, 3) GROUP BY post_id;
 ```
 
-It supports Rails 4.x, Rails 5.x and Rails 6.x
+It supports Ruby 3.2, 3.3, 3.4 and 4.0, and Rails 7.x and 8.x
 
 ## Installation
 

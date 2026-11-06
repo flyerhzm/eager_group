@@ -1,5 +1,9 @@
 # Next Release
 
+* Drop Ruby 3.1 and Rails 4.x, 5.x, 6.x support
+* Support Ruby 3.2, 3.3, 3.4, 4.0 and Rails 7.x, 8.x
+* Replace Travis CI with GitHub Actions
+
 ## 0.10.0 (12/28/2022)
 
 * Add STI support, use `class_attribute` to prevent subclasses affect each other
