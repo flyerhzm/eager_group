@@ -1,5 +1,7 @@
 # Next Release
 
+* Fix eager group for associations whose `primary_key` is not the model's primary key
+
 ## 0.11.0 (11/06/2026)
 
 * Drop Ruby 3.1 and Rails 4.x, 5.x, 6.x support

@@ -82,6 +82,13 @@ RSpec.describe EagerGroup, type: :model do
       it 'does not raise error when association is empty' do
         Teacher.includes(:homeworks).eager_group(homeworks: :students_count).to_a
       end
+
+      it 'gets Tag#children_count when association uses a custom primary key' do
+        tags = Tag.eager_group(:children_count)
+        expect(tags.detect { |tag| tag.name == 'Africa' }.children_count).to eq 2
+        expect(tags.detect { |tag| tag.name == 'Kenya' }.children_count).to eq 0
+        expect(tags.detect { |tag| tag.name == 'Asia' }.children_count).to eq 0
+      end
     end
 
     context 'has_and_belongs_to_many' do
@@ -219,6 +226,11 @@ RSpec.describe EagerGroup, type: :model do
         posts = Post.all
         expect(posts[0].comments_average_rating_by_author(students[0], true)).to eq 4.5
         expect(posts[1].comments_average_rating_by_author(students[0], true)).to eq 3
+      end
+
+      it 'gets Tag#children_count when association uses a custom primary key' do
+        tag = Tag.find_by(name: 'Africa')
+        expect(tag.children_count).to eq 2
       end
     end
 

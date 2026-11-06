@@ -39,3 +39,8 @@ sedan.passengers.create(name: 'Ruby', age: 7)
 sedan.passengers.create(name: 'Mike', age: 8)
 sedan.passengers.create(name: 'Zach', age: 9)
 sedan.passengers.create(name: 'Jacky', age: 10)
+
+Tag.create(name: 'Africa')
+Tag.create(name: 'Kenya', parent_name: 'Africa')
+Tag.create(name: 'Nigeria', parent_name: 'Africa')
+Tag.create(name: 'Asia')

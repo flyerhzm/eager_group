@@ -22,7 +22,7 @@ module EagerGroup
       end
 
       def group_by_key
-        @klass.primary_key
+        reflection.active_record_primary_key
       end
 
       def aggregate_hash
